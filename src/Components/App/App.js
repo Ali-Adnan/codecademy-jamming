@@ -40,12 +40,14 @@ class App extends React.Component {
   }
 
   savePlaylist() {
+    console.log("the state of the playlist name after onChange is", this.state.playlistName);
     const trackURIs = this.state.playlistTracks.map(track => track.uri);
     Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
       this.setState({
         playlistName: 'New Playlist',
         playlistTracks: []
       });
+      console.log("the state of the playlist name after Spotify saves data is", this.state.playlistName);
     });
   }
 
@@ -64,6 +66,7 @@ class App extends React.Component {
     <div className="App-playlist">
       <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack}/>
       <PlayList
+      playlistName={this.state.playlistName}
       playlistTracks={this.state.playlistTracks}
       onRemove={this.removeTrack}
       onNameChange={this.updatePlaylistName}
