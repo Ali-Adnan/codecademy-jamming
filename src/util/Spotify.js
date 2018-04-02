@@ -34,7 +34,7 @@ const accessToken = Spotify.getAccessToken();
         return [];
       }
 
-      return jsonResponse.tracks.map(track => ({
+      return jsonResponse.tracks.items.map(track => ({
         id: track.id,
         name: track.name,
         artist: track.artists[0].name,
@@ -44,8 +44,8 @@ const accessToken = Spotify.getAccessToken();
 
 });
 },
-savePlaylist(playlistName, trackURIs) {
-  if (!playlistName || !trackURIs) {
+savePlaylist(name, trackURIs) {
+  if (!name || !trackURIs.length) {
     return;
   }
   const accessToken = Spotify.getAccessToken();
@@ -59,7 +59,7 @@ savePlaylist(playlistName, trackURIs) {
     return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
       headers: headers,
       method: 'POST',
-      body: JSON.stringify({playlistName: playlistName})
+      body: JSON.stringify({name: name})
   }).then(response => {
     return response.json();
   }).then(jsonResponse => {
@@ -67,7 +67,7 @@ savePlaylist(playlistName, trackURIs) {
     return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`, {
       headers: headers,
       method: 'POST',
-      body: JSON.stringify({trackURIs: trackURIs})
+      body: JSON.stringify({uris: trackURIs})
     });
   });
   });
