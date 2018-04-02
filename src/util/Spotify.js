@@ -1,5 +1,5 @@
 const clientId = 'fef069e3f7de45db8f7c612a2e4d2cd9';
-const redirectUri = 'http://localhost:3000/';
+const redirectUri = 'http://jamming-adnan.surge.sh/';
 
 
 let accessToken;
